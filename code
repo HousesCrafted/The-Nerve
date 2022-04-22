@@ -1,0 +1,141 @@
+local plr = owner
+hum = plr.Character.Humanoid
+chr = plr.Character
+hrp = chr:FindFirstChild("HumanoidRootPart")
+hum:SetStateEnabled(15, false)
+local reviving = false
+function revive(conn)
+	if reviving == true then return end
+	reviving = true
+	conn:Disconnect()
+	hrp.Anchored = true
+	local oldhrpcf = hrp.CFrame
+	local pt = Instance.new("Part", workspace)
+	pt.Color = Color3.new(1, 0.866667, 0.376471)
+	pt.Material = "Neon"
+	pt.Size = Vector3.new(1,1,1)
+	pt.CanCollide = false
+	pt.Anchored = true
+	pt.Transparency = 0
+	local newmesh = Instance.new("SpecialMesh", pt)
+	newmesh.MeshType = "Cylinder"
+	pt.CFrame = hrp.CFrame * CFrame.new(0,-3,0) * CFrame.Angles(0,0,math.rad(90))
+	local pt2 = Instance.new("Part", workspace)
+	pt2.Color = Color3.new(1, 0.866667, 0.376471)
+	pt2.Material = "Neon"
+	pt2.Size = Vector3.new(1,1,1)
+	pt2.CanCollide = false
+	pt2.Anchored = true
+	local newmesh2 = newmesh:Clone()
+	newmesh2.Parent = pt2
+	newmesh.Scale = Vector3.new(10,10,10)
+	newmesh2.Scale = Vector3.new(0.001,1,1)
+	pt2.CFrame = hrp.CFrame * CFrame.new(0,-3.2,0) * CFrame.Angles(0,0,math.rad(90))
+	pt2.Transparency = 0
+	game.Debris:AddItem(pt)
+	game.Debris:AddItem(pt2,1.5)
+	game:GetService("TweenService"):Create(pt,TweenInfo.new(1.5,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0),{CFrame = hrp.CFrame * CFrame.new(0,53,0) * CFrame.Angles(0,0,math.rad(90))}):Play()
+	game:GetService("TweenService"):Create(newmesh,TweenInfo.new(1.5,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0),{Scale = newmesh.Scale + Vector3.new(100,100,0)}):Play()
+	game:GetService("TweenService"):Create(newmesh2,TweenInfo.new(1.5,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0),{Scale = newmesh2.Scale + Vector3.new(1,100,100)}):Play()
+	spawn(function()
+		task.wait(0.25)
+		game:GetService("TweenService"):Create(pt2,TweenInfo.new(1.25,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0),{Transparency = 1}):Play()
+		game:GetService("TweenService"):Create(pt,TweenInfo.new(1.25,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0),{Transparency = 1}):Play()
+	end)
+	print("Going to load character")
+	local oldchr = chr
+	spawn(function()
+		plr:LoadCharacter()
+	end)
+	chr = plr.Character
+	if chr == oldchr then repeat task.wait() chr = plr.Character until chr ~= oldchr end
+	print("Set Character!")
+	hum = chr:WaitForChild("Humanoid")
+	print("Set Humanoid!")
+	hrp = chr:WaitForChild("HumanoidRootPart")
+	print("Set HumanoidRootPart!")
+	hrp.CFrame = oldhrpcf
+	print("Set CFrame of HRP!")
+	hum:SetStateEnabled(15, false)
+	print("Finished!")
+	reviving = false
+	conn = hum.HealthChanged:Connect(function()
+		if hum.Health < 1 then
+			revive(conn)
+		end
+	end)
+end
+function revivenoconn()
+	if reviving == true then return end
+	reviving = true
+	hrp.Anchored = true
+	local oldhrpcf = hrp.CFrame
+	local pt = Instance.new("Part", workspace)
+	pt.Color = Color3.new(1, 0.866667, 0.376471)
+	pt.Material = "Neon"
+	pt.Size = Vector3.new(1,1,1)
+	pt.CanCollide = false
+	pt.Anchored = true
+	pt.Transparency = 0
+	local newmesh = Instance.new("SpecialMesh", pt)
+	newmesh.MeshType = "Cylinder"
+	pt.CFrame = hrp.CFrame * CFrame.new(0,-3,0) * CFrame.Angles(0,0,math.rad(90))
+	local pt2 = Instance.new("Part", workspace)
+	pt2.Color = Color3.new(1, 0.866667, 0.376471)
+	pt2.Material = "Neon"
+	pt2.Size = Vector3.new(1,1,1)
+	pt2.CanCollide = false
+	pt2.Anchored = true
+	local newmesh2 = newmesh:Clone()
+	newmesh2.Parent = pt2
+	newmesh.Scale = Vector3.new(10,10,10)
+	newmesh2.Scale = Vector3.new(0.001,1,1)
+	pt2.CFrame = hrp.CFrame * CFrame.new(0,-3.2,0) * CFrame.Angles(0,0,math.rad(90))
+	pt2.Transparency = 0
+	game.Debris:AddItem(pt)
+	game.Debris:AddItem(pt2,1.5)
+	game:GetService("TweenService"):Create(pt,TweenInfo.new(1.5,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0),{CFrame = hrp.CFrame * CFrame.new(0,53,0) * CFrame.Angles(0,0,math.rad(90))}):Play()
+	game:GetService("TweenService"):Create(newmesh,TweenInfo.new(1.5,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0),{Scale = newmesh.Scale + Vector3.new(100,100,0)}):Play()
+	game:GetService("TweenService"):Create(newmesh2,TweenInfo.new(1.5,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0),{Scale = newmesh2.Scale + Vector3.new(1,100,100)}):Play()
+	spawn(function()
+		task.wait(0.25)
+		game:GetService("TweenService"):Create(pt2,TweenInfo.new(1.25,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0),{Transparency = 1}):Play()
+		game:GetService("TweenService"):Create(pt,TweenInfo.new(1.25,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0),{Transparency = 1}):Play()
+	end)
+	print("Going to load character")
+	local oldchr = chr
+	spawn(function()
+		plr:LoadCharacter()
+	end)
+	chr = plr.Character
+	if chr == oldchr then repeat task.wait() chr = plr.Character until chr ~= oldchr end
+	print("Set Character!")
+	hum = chr:WaitForChild("Humanoid")
+	print("Set Humanoid!")
+	hrp = chr:WaitForChild("HumanoidRootPart")
+	print("Set HumanoidRootPart!")
+	hrp.CFrame = oldhrpcf
+	hum:SetStateEnabled(15, false)
+	print("Set CFrame of HRP!")
+	print("Finished!")
+	local conn
+	reviving = false
+	conn = hum.HealthChanged:Connect(function()
+		if hum.Health < 1 then
+			revive(conn)
+		end
+	end)
+end
+local connection
+connection = hum.HealthChanged:Connect(function()
+	if hum.Health < 1 then
+		revive(connection)
+	end
+end)
+while task.wait() do
+	if not chr:FindFirstChild("HumanoidRootPart") or not chr:FindFirstChild("Torso") or not chr:FindFirstChild("Head") then
+		if (not reviving) then
+			revivenoconn()
+		end
+	end
+end
