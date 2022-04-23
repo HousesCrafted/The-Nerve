@@ -10,19 +10,21 @@ function revive(conn)
 	conn:Disconnect()
 	hrp.Anchored = true
 	local oldhrpcf = hrp.CFrame
-	local pt = Instance.new("Part", workspace)
+	local pt = Instance.new("SpawnLocation", workspace)
 	pt.Color = Color3.new(1, 0.866667, 0.376471)
 	pt.Material = "Neon"
 	pt.Size = Vector3.new(1,1,1)
 	pt.CanCollide = false
+	pt.Enabled = false
 	pt.Anchored = true
 	pt.Transparency = 0
 	local newmesh = Instance.new("SpecialMesh", pt)
 	newmesh.MeshType = "Cylinder"
 	pt.CFrame = hrp.CFrame * CFrame.new(0,-3,0) * CFrame.Angles(0,0,math.rad(90))
-	local pt2 = Instance.new("Part", workspace)
+	local pt2 = Instance.new("SpawnLocation", workspace)
 	pt2.Color = Color3.new(1, 0.866667, 0.376471)
 	pt2.Material = "Neon"
+	pt2.Enabled = false
 	pt2.Size = Vector3.new(1,1,1)
 	pt2.CanCollide = false
 	pt2.Anchored = true
